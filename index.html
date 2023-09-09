@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <h1>INHERITANCE AND PROTOTYPE</h1>
+    <h2>1.Create 2 objects - parent and child. Attach methods to parent and use those methods<br> in child object using parents prototype</h2>
+    <p>Ans:function Shape() {}<br>
+        Shape.prototype.calculateArea = function() {<br>
+          return "Not implemented for the shape.";<br>
+        };<br>
+        function Circle(radius) {<br>
+          this.radius = radius;<br>
+        }<br>
+        Circle.prototype = Object.create(Shape.prototype);<br>
+        Circle.prototype.constructor = Circle;<br>
+        Circle.prototype.calculateArea = function() {<br>
+          return Math.PI * this.radius * this.radius;<br>
+        };<br>
+        const shape = new Shape();<br>
+        const circle = new Circle(5);<br>
+        console.log(shape.calculateArea()); <br>
+        console.log(circle.calculateArea());<br>
+    output:<br>Not implemented for the shape.<br>
+    78.53981633974483 </p>
+    <br>
+    <h2>2.Write code to explain prototype chaining</h2>
+    <p>Ans:Prototype chaining is the mechanism by which JavaScript objects inherit properties and methods from their prototype objects.
+        <br>
+        function Parent(name) {<br>
+          this.name = name;<br>
+        }<br>
+        Parent.prototype.greet = function() {<br>
+          console.log(`Hello, I am ${this.name}`);<br>
+        };<br>
+        function Child(name, toy) {<br>
+          Parent.call(this, name);<br>
+          this.toy = toy;<br>
+        }<br>
+        Child.prototype = Object.create(Parent.prototype);<br>
+        Child.prototype.constructor = Child;<br>
+        Child.prototype.play = function() {<br>
+          console.log(`${this.name} is playing with ${this.toy}`);<br>
+        };<br>
+        const child = new Child("shradhanjali", "badminton");<br>
+        child.greet(); <br>
+        child.play();<br>
+        output:<br>Hello, I am shradhanjali<br>
+        shradhanjali is playing with badminton
+    </p>
+    <h2>3.Add a method to calculate sum of all elements in Array in array's protype, use that method to calculate sum for multiple arrays</h2>
+    <p>Ans:Array.prototype.calculateSum = function() {<br>
+        let sum = 0;<br>
+        for (let i = 0; i < this.length; i++) {<br>
+          sum += this[i];<br>
+        }<br>
+        return sum;<br>
+      };<br>
+      const array1 = [1, 2, 3, 4, 5];<br>
+      const array2 = [10, 20, 30];<br>
+      const array3 = [2, 4, 6, 8];<br>
+      console.log("Sum of array1:", array1.calculateSum()); <br> 
+      console.log("Sum of array2:", array2.calculateSum()); <br> 
+      console.log("Sum of array3:", array3.calculateSum());<br>
+    output:<br>Sum of array1: 15<br>
+    Sum of array2: 60<br>
+    Sum of array3: 20<br></p>
+    <h2>4.Write a JavaScript function to retrieve all the names of object's own and inherited properties.</h2>
+    <p>Ans:function allKeys(obj) {<br>
+        if (!isObject(obj)) return [];<br>
+        var keys = [];<br>
+        for (var key in obj) keys.push(key);<br>
+        return keys;<br>
+    }<br>
+    function isObject(obj) <br>
+    {<br>
+        var type = typeof obj;<br>
+        return type === 'function' || type === 'object' && !!obj;<br>
+      }<br>
+    function Student(name) {<br>
+      this.name = name;<br>
+    }<br>
+    Student.prototype.rollno = true;<br>
+    console.log(allKeys(new Student("Tanmay")));<br>
+output:<br>[ 'name', 'rollno' ]</p>
+
+</body>
+</html>
